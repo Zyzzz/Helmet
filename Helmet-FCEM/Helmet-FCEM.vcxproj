@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{917A11C0-D2D1-42C4-AE4B-223AD5F338FF}</ProjectGuid>
+    <RootNamespace>HelmetFCEM</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <StackReserveSize>10000000</StackReserveSize>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CApplication.h" />
+    <ClInclude Include="CRange.h" />
+    <ClInclude Include="CWorkbook.h" />
+    <ClInclude Include="CWorkbooks.h" />
+    <ClInclude Include="CWorksheet.h" />
+    <ClInclude Include="CWorksheets.h" />
+    <ClInclude Include="Helmet-FCEM.h" />
+    <ClInclude Include="Helmet-FCEMDlg.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Step1dialog.h" />
+    <ClInclude Include="Step2dialog.h" />
+    <ClInclude Include="Step3dialog.h" />
+    <ClInclude Include="Step4dialog.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="zhibiao.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Helmet-FCEM.cpp" />
+    <ClCompile Include="Helmet-FCEMDlg.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Step1dialog.cpp" />
+    <ClCompile Include="Step2dialog.cpp" />
+    <ClCompile Include="Step3dialog.cpp" />
+    <ClCompile Include="Step4dialog.cpp" />
+    <ClCompile Include="zhibiao.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Helmet-FCEM.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\HelmetFCEM.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\1.bmp" />
+    <Image Include="res\11.bmp" />
+    <Image Include="res\2.bmp" />
+    <Image Include="res\22.bmp" />
+    <Image Include="res\3.bmp" />
+    <Image Include="res\33.bmp" />
+    <Image Include="res\4.bmp" />
+    <Image Include="res\44.bmp" />
+    <Image Include="res\5.bmp" />
+    <Image Include="res\55.bmp" />
+    <Image Include="res\6.bmp" />
+    <Image Include="res\66.bmp" />
+    <Image Include="res\add.bmp" />
+    <Image Include="res\add1.bmp" />
+    <Image Include="res\addmenu.bmp" />
+    <Image Include="res\b1.bmp" />
+    <Image Include="res\b2.bmp" />
+    <Image Include="res\b3.bmp" />
+    <Image Include="res\bangzhu.bmp" />
+    <Image Include="res\bing.bmp" />
+    <Image Include="res\bing1.bmp" />
+    <Image Include="res\bitmap50.bmp" />
+    <Image Include="res\bj.bmp" />
+    <Image Include="res\bj2.bmp" />
+    <Image Include="res\bj3.bmp" />
+    <Image Include="res\bj4.bmp" />
+    <Image Include="res\BJS.bmp" />
+    <Image Include="res\c1.bmp" />
+    <Image Include="res\c2.bmp" />
+    <Image Include="res\c3.bmp" />
+    <Image Include="res\c4.bmp" />
+    <Image Include="res\cancle.bmp" />
+    <Image Include="res\cancle1.bmp" />
+    <Image Include="res\close.bmp" />
+    <Image Include="res\CLOSE1.bmp" />
+    <Image Include="res\delete.bmp" />
+    <Image Include="res\delete1.bmp" />
+    <Image Include="res\delmenu.bmp" />
+    <Image Include="res\excel.bmp" />
+    <Image Include="res\excel1.bmp" />
+    <Image Include="res\fengefu.bmp" />
+    <Image Include="res\gongju.bmp" />
+    <Image Include="res\guiyihua.bmp" />
+    <Image Include="res\guiyihua1.bmp" />
+    <Image Include="res\Helmet-FCEM.ico" />
+    <Image Include="res\jisuan.bmp" />
+    <Image Include="res\jisuan1.bmp" />
+    <Image Include="res\jqpj.bmp" />
+    <Image Include="res\jqpj1.bmp" />
+    <Image Include="res\jqpjI.bmp" />
+    <Image Include="res\jqpjI1.bmp" />
+    <Image Include="res\LINE.bmp" />
+    <Image Include="res\loading.bmp" />
+    <Image Include="res\loading_0.bmp" />
+    <Image Include="res\loading_1.bmp" />
+    <Image Include="res\loading_2.bmp" />
+    <Image Include="res\loading_3.bmp" />
+    <Image Include="res\loading_4.bmp" />
+    <Image Include="res\loading_5.bmp" />
+    <Image Include="res\loading_6.bmp" />
+    <Image Include="res\loading_7.bmp" />
+    <Image Include="res\main.bmp" />
+    <Image Include="res\nochoose.bmp" />
+    <Image Include="res\nochoose1.bmp" />
+    <Image Include="res\ok.bmp" />
+    <Image Include="res\OK1.bmp" />
+    <Image Include="res\open.bmp" />
+    <Image Include="res\open1.bmp" />
+    <Image Include="res\pjzb.bmp" />
+    <Image Include="res\quanxuan.bmp" />
+    <Image Include="res\quanxuan1.bmp" />
+    <Image Include="res\rename.bmp" />
+    <Image Include="res\rename1.bmp" />
+    <Image Include="res\renamemenu.bmp" />
+    <Image Include="res\save.bmp" />
+    <Image Include="res\save1.bmp" />
+    <Image Include="res\savelist.bmp" />
+    <Image Include="res\savelist1.bmp" />
+    <Image Include="res\shezhi.bmp" />
+    <Image Include="res\shezhi1.bmp" />
+    <Image Include="res\shuaxin.bmp" />
+    <Image Include="res\shuaxin1.bmp" />
+    <Image Include="res\small.bmp" />
+    <Image Include="res\small1.bmp" />
+    <Image Include="res\start.bmp" />
+    <Image Include="res\STEP2.bmp" />
+    <Image Include="res\STEP3.bmp" />
+    <Image Include="res\STEP4.bmp" />
+    <Image Include="res\tip.bmp" />
+    <Image Include="res\tip1.bmp" />
+    <Image Include="res\title.bmp" />
+    <Image Include="res\tools.bmp" />
+    <Image Include="res\tree.bmp" />
+    <Image Include="res\tree1.bmp" />
+    <Image Include="res\wenjian.bmp" />
+    <Image Include="res\wenjian1.bmp" />
+    <Image Include="res\xinjian.bmp" />
+    <Image Include="res\xinjian1.bmp" />
+    <Image Include="res\zhexian.bmp" />
+    <Image Include="res\zhexian1.bmp" />
+    <Image Include="res\zhuzt.bmp" />
+    <Image Include="res\zhuzt1.bmp" />
+    <Image Include="res\zystc.bmp" />
+    <Image Include="res\zystc1.bmp" />
+    <Image Include="res\zystc2.bmp" />
+    <Image Include="res\zystcI.bmp" />
+    <Image Include="res\zystcI1.bmp" />
+    <Image Include="res\帮助.bmp" />
+    <Image Include="res\模糊.bmp" />
+    <Image Include="res\里呢.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="Helmet-FCEM.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

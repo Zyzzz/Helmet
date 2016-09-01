@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Helmet-FCEM.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Helmet-FCEMDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Step1dialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Step2dialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="zhibiao.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Step3dialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CApplication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorkbook.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorkbooks.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorksheet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CWorksheets.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CRange.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Step4dialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Helmet-FCEM.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Helmet-FCEMDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Step1dialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Step2dialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="zhibiao.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Step3dialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Step4dialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Helmet-FCEM.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\HelmetFCEM.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Helmet-FCEM.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bj.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bj2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bj3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\BJS.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\start.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_0.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_4.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_5.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_6.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading_7.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\loading.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bj4.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\main.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\wenjian.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\shezhi.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\gongju.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\帮助.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\wenjian1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\close.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\CLOSE1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\small1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\small.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\xinjian.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\xinjian1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\open.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\open1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\save.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\save1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\delete.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\delete1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zystc.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zystc1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zystc2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jqpj1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zystcI.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zystcI1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jqpj.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jqpjI.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jqpjI1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\excel.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\excel1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jisuan.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\jisuan1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zhexian.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zhexian1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zhuzt.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bitmap50.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\zhuzt1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bing.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bing1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\4.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\5.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\6.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\11.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\22.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\33.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\44.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\55.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\66.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\tree.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\tree1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\add.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\add1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\addmenu.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\delmenu.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\renamemenu.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\rename.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\rename1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\模糊.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\STEP2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\LINE.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\shuaxin.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\shuaxin1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\guiyihua.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\guiyihua1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\title.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\里呢.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\fengefu.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\pjzb.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\STEP3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\quanxuan.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\quanxuan1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\nochoose.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\nochoose1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\cancle.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\cancle1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\ok.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\OK1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\tip.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\tip1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\savelist.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\savelist1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\shezhi1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\tools.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bangzhu.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\c1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\c2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\c3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\c4.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\b1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\b2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\b3.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\STEP4.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
