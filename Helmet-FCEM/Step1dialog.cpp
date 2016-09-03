@@ -7,10 +7,13 @@
 #include "afxdialogex.h"
 #include <locale>
 #include "zhibiao.h"
+
+//int Ftreenum = 1; 
+//CString Ftree[200];
+
 CToolTipCtrl  m_ctrlTT11;
 //***************************记录树的所有节点，用于分级赋权
-int Ftreenum=1;
-CString Ftree[200];
+
 int treesave=0;
 
 extern CString zhibiaoxx[57];//57项评价指标（记录勾选的项目） 继承自zhibiao.cpp
@@ -25,10 +28,10 @@ CString itemname,itemnumber,itemoldname;//指标树
 CString itemname1,itemnumber1,itemoldname1;//评价树
 //****************************************保存用指标树的节点
 int position;
- CString  zhibiaoitem[100][2];//第一步指标树的所有节点 [0]编号(用于分三级，并知道谁与谁是一级)  [1]内容
- int zhibiaoitemchilds[100];//第一步指标树的每个节点有多少子节点
- int zhibiaoitempoint=0;//第一步指标树一共有多少节点（指标）
- int  itemchildpoint=0;//
+CString  zhibiaoitem[100][2];//第一步指标树的所有节点 [0]编号(用于分三级，并知道谁与谁是一级)  [1]内容
+int zhibiaoitemchilds[100];//第一步指标树的每个节点有多少子节点
+int zhibiaoitempoint=0;//第一步指标树一共有多少节点（指标）
+int  itemchildpoint=0;//
 //*******************************************评语树
 extern CString  treeitem1[100];//用于存放第一步的评语树的所有节点内容
 extern int treepoint1;
@@ -114,14 +117,14 @@ BOOL Step1dialog::OnInitDialog()
     pStatic->SetBitmap(hBitmap);
 	m_tip.LoadBitmaps(IDB_BITMAP95,IDB_BITMAP96);
 	m_save.LoadBitmaps(IDB_BITMAP97,IDB_BITMAP98);
-	 EnableToolTips(TRUE);//enable use it
-   m_ctrlTT11.Create(this);
-   m_ctrlTT11.Activate(TRUE);
-   m_ctrlTT11.SetTipTextColor(RGB(0,0,0));//font color
+	EnableToolTips(TRUE);//enable use it
+	m_ctrlTT11.Create(this);
+	m_ctrlTT11.Activate(TRUE);
+	m_ctrlTT11.SetTipTextColor(RGB(0,0,0));//font color
  
-   //IDC_TEST为你想添加提示的控件IDC，"hello为想添加的提示语句"
-   m_ctrlTT11.AddTool(GetDlgItem(IDC_BUTTON27),(_bstr_t)"提示");
-   m_ctrlTT11.AddTool(GetDlgItem(IDC_BUTTON28),(_bstr_t)"保存模型信息");
+    //IDC_TEST为你想添加提示的控件IDC，"hello为想添加的提示语句"
+    m_ctrlTT11.AddTool(GetDlgItem(IDC_BUTTON27),(_bstr_t)"提示");
+    m_ctrlTT11.AddTool(GetDlgItem(IDC_BUTTON28),(_bstr_t)"保存模型信息");
 	//*********************************8
 	//指标树
 	//***********************************
@@ -137,7 +140,7 @@ BOOL Step1dialog::OnInitDialog()
 	//*********************************插入节点
 	hroot=m_ctltree.InsertItem((_bstr_t)"评价指标(U)",1,0,TVI_ROOT);
 	zhibiaoitem[zhibiaoitempoint][0]="0";zhibiaoitem[zhibiaoitempoint][1]="评价指标(U)";zhibiaoitemchilds[zhibiaoitempoint]=0;zhibiaoitempoint++;
-	 h1=m_ctltree.InsertItem((_bstr_t)"指标",1,0,hroot);//添加二级节点
+	h1=m_ctltree.InsertItem((_bstr_t)"指标",1,0,hroot);//添加二级节点
 	 //************************************************************************************
 	 //找到要插入节点的位置给他的子项目数加一并因此判断此节点的编号应该是多少
 	  itemname=m_ctltree.GetItemText(hroot);
@@ -1777,7 +1780,7 @@ void Step1dialog::OnBnClickedButton1()//已有工程新建工程
 void Step1dialog::OnBnClickedButton28()//save
 {
 	// TODO: 在此添加控件通知处理程序代码
-	treesave=1;
+	   /* treesave=1;*/
 		int i,j,k,yiji=0,erji=0,sanji=0,m,n,b;
 	    CString str;
 		if(m_ctltree.ItemHasChildren(hroot))//判断结点是否有子结点
@@ -1998,6 +2001,7 @@ void Step1dialog::OnBnClickedButton28()//save
 	CFileDialog dlg(false,szFileExt,NULL,OFN_HIDEREADONLY,szFileFilter);
 	if(dlg.DoModal()==IDOK)
 	{
+		treesave = 1;
 		CStdioFile File;		
 		File.Open(dlg.GetPathName(),CFile::modeCreate|CFile::modeReadWrite);
 		char* old_locale = _strdup( setlocale(LC_CTYPE,NULL) );

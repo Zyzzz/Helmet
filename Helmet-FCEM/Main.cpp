@@ -17,12 +17,16 @@ int av=1,ov=0,aj=0,oj=0;//全局变量 选择算法分别是M(∧,∨)M(.,∨)M(∧,+)M(.,+)
 extern int treesave;  //第一步建立的指标树和评语树是否保存的标志
 extern float quanzhong[70];//第二步所输入的一级指标的权重
 extern int quanzhongnum;//一共有多少一级指标权重
+extern float Two_wight[70];
+extern float Three_wight[70];
 //*****************************以下变量继承自Step1dialog
 extern  CString  zhibiaoitem[100][2];//第一步指标树的所有节点 [0]编号(用于分三级，并知道谁与谁是一级)  [1]内容
 extern  int zhibiaoitemchilds[100];//第一步指标树的每个节点有多少子节点
 extern int zhibiaoitempoint;///第一步指标树一共有多少节点（指标）
 extern int  itemchildpoint;//
-//______________________________________________________
+//______________________________________________________.
+//extern int Ftreenum = 1;
+//extern CString Ftree[200];
 CString openitem[200];//打开的txt文件的内容
 int openpoint=0;//打开文件内容的总个数
 int openitemnum[200];//每个对应的子项个数
@@ -591,13 +595,13 @@ void Main::OnBnClickedButton19()//第二步
 		   MessageBox((_bstr_t)"请先保存第一步建立的模型",(_bstr_t)"警告", MB_OKCANCEL ); 
 			return;
 	   }
-	    CRect rect;  
+	   CRect rect;  
        GetDlgItem(IDC_STATIC_dialog)-> GetWindowRect(&rect); 
        ScreenToClient(&rect); 
 	   if(step2dhkcishu==0)
 	   {
-	  step2dhk.Create(IDD_Step2_DIALOG, this);  
-	   step2dhk.MoveWindow(rect);
+			step2dhk.Create(IDD_Step2_DIALOG, this);  
+			step2dhk.MoveWindow(rect);
 	   //****************
 	       if(step1dhkxianshi==1)
 		   {
@@ -1064,45 +1068,56 @@ void Main::OnBnClickedButton6()//打开文件
 			}
 			itemchildpoint=0;
 
-		  CString szFileFilter=(_bstr_t)"文本(*.txt)|*.txt|";
-	          CString szFileExt=(_bstr_t)"txt";//扩展名为txt
-	          CFileDialog dlg(true,szFileExt,NULL,OFN_HIDEREADONLY,szFileFilter);
+		    CString szFileFilter=(_bstr_t)"文本(*.txt)|*.txt|";
+	        CString szFileExt=(_bstr_t)"txt";//扩展名为txt
+	        CFileDialog dlg(true,szFileExt,NULL,OFN_HIDEREADONLY,szFileFilter);
 	          if(dlg.DoModal()==IDOK)
 	          {
+				
+					
 	            	CStdioFile File;
 		            CString strLine,strText;//一个存储文本一行内容一个存储所有的
 		            File.Open(dlg.GetPathName(),CFile::modeRead);
 		            char* old_locale = _strdup( setlocale(LC_CTYPE,NULL) );
 		            setlocale( LC_CTYPE, "chs" );//设定
 					File.ReadString(strLine);//读取开头第一行
+					/*Ftree[0] = strLine;*/
 					int len=strLine.GetLength();
 					int line= strLine.Find((_bstr_t)"/");
-					openitem[0]= strLine.Mid(0,len-(len-line));		
+					openitem[0]= strLine.Mid(1,len-(len-line)-1);		
 					int Vpoint=_ttoi(strLine.Mid(line+1,len));//总的有几个	
-					openitemnum[0]=Vpoint;openpoint++;
+					openitemnum[0]=Vpoint;
+					openpoint++;
 					for(i=0;i<Vpoint;i++)
 		            {
+
 					    File.ReadString(strLine);//读取一级节点	一级节点形式：完成任务能力/3
 						int len1=strLine.GetLength();//读取其长度
 					    int line1= strLine.Find((_bstr_t)"/");//找到/的位置
-					    openitem[openpoint]= strLine.Mid(0,len1-(len1-line1));//记录节点内容 如：完成任务能力	
+						openitem[openpoint] = strLine.Mid(1, len1 - (len1 - line1) - 1);//记录节点内容 如：完成任务能力	
 					    int Vpoint1=_ttoi(strLine.Mid(line1+1,len1));//读取/后面数字 得知该节点有几个子节点	
 					    openitemnum[openpoint]=Vpoint1;openpoint++;	//记录其子节点个数
+				/*		Ftree[Ftreenum] = strLine;
+						Ftreenum++;*/
 						for(j=0;j<Vpoint1;j++)
 		                {						
 							File.ReadString(strLine);//读取二级节点		
 						    int len2=strLine.GetLength();
 					        int line2= strLine.Find((_bstr_t)"/");
-					        openitem[openpoint]= strLine.Mid(0,len2-(len2-line2));
+							openitem[openpoint] = strLine.Mid(1, len2 - (len2 - line2) - 1);
 					        int Vpoint2=_ttoi(strLine.Mid(line2+1,len2));//总的有几个	
 					        openitemnum[openpoint]=Vpoint2;openpoint++;		
+						/*	Ftree[Ftreenum] = strLine;
+							Ftreenum++;*/
 							for(k=0;k<Vpoint2;k++)
 		                    {
 								File.ReadString(strLine);//读取三级节点								        
 					           int len3=strLine.GetLength();
 					           int line3= strLine.Find((_bstr_t)"/");
-					           openitem[openpoint]= strLine.Mid(0,len3-(len3-line3));
-					            openitemnum[openpoint]=0;openpoint++;	
+					           openitem[openpoint]= strLine.Mid(1,len3);
+					            openitemnum[openpoint]=0;openpoint++;
+							/*	Ftree[Ftreenum] = strLine;
+								Ftreenum++;*/
 							}
 						}
 		            }
@@ -1113,8 +1128,8 @@ void Main::OnBnClickedButton6()//打开文件
 				
 					}treepoint1=0;
 				    File.ReadString(strLine);//读取开头第一行
-					 len=strLine.GetLength();
-					 line= strLine.Find((_bstr_t)"/");
+					len=strLine.GetLength();
+					line= strLine.Find((_bstr_t)"/");
 					treeitem1[0]= strLine.Mid(0,len-(len-line));treepoint1++;
 					 while(File.ReadString(strLine))
 		            {
@@ -1184,7 +1199,7 @@ void Main::OnBnClickedButton6()//打开文件
 					File.ReadString(strLine);//读取开头第一行
 					int len=strLine.GetLength();
 					int line= strLine.Find((_bstr_t)"/");
-					openitem[0]= strLine.Mid(0,len-(len-line));		
+					openitem[0]= strLine.Mid(1,len-(len-line));		
 					int Vpoint=_ttoi(strLine.Mid(line+1,len));//总的有几个	
 					openitemnum[0]=Vpoint;openpoint++;
 					for(i=0;i<Vpoint;i++)
@@ -1192,7 +1207,7 @@ void Main::OnBnClickedButton6()//打开文件
 					    File.ReadString(strLine);//读取一级节点	
 						int len1=strLine.GetLength();
 					    int line1= strLine.Find((_bstr_t)"/");
-					    openitem[openpoint]= strLine.Mid(0,len1-(len1-line1));	
+					    openitem[openpoint]= strLine.Mid(1,len1-(len1-line1)-1);	
 					    int Vpoint1=_ttoi(strLine.Mid(line1+1,len1));//总的有几个	
 					    openitemnum[openpoint]=Vpoint1;openpoint++;	
 						for(j=0;j<Vpoint1;j++)
@@ -1200,7 +1215,7 @@ void Main::OnBnClickedButton6()//打开文件
 							File.ReadString(strLine);//读取二级节点		
 						    int len2=strLine.GetLength();
 					        int line2= strLine.Find((_bstr_t)"/");
-					        openitem[openpoint]= strLine.Mid(0,len2-(len2-line2));
+					        openitem[openpoint]= strLine.Mid(1,len2-(len2-line2)-1);
 					        int Vpoint2=_ttoi(strLine.Mid(line2+1,len2));//总的有几个	
 					        openitemnum[openpoint]=Vpoint2;openpoint++;		
 							for(k=0;k<Vpoint2;k++)
@@ -1208,7 +1223,7 @@ void Main::OnBnClickedButton6()//打开文件
 						       File.ReadString(strLine);//读取三级节点								        
 					            int len3=strLine.GetLength();
 					           int line3= strLine.Find((_bstr_t)"/");
-					           openitem[openpoint]= strLine.Mid(0,len3-(len3-line3));
+					           openitem[openpoint]= strLine.Mid(1,len3);
 					            openitemnum[openpoint]=0;openpoint++;	
 							}
 						}

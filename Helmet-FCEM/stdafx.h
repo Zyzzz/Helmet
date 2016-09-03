@@ -36,6 +36,8 @@
 
 
 
+extern int Ftreenum;
+extern CString Ftree[200];
 
 
 

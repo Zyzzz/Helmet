@@ -16,6 +16,8 @@ extern CString  treeitem[100],treeitem1[100];
 extern int treepoint,treepoint1;
 int Rsave=0;
 float R[100][100]={0.0};
+int NodeNum = 0;
+extern int zhibiaoitempoint;
 CString shuru3;int hang3,lie3,lieshu3=0;
 // Step3dialog 对话框
 
@@ -96,19 +98,51 @@ BOOL Step3dialog::OnInitDialog()
 	{
 		//MessageBox((_bstr_t)treeitem[i]);
 		m_list.InsertColumn(i, (_bstr_t)treeitem1[i], LVCFMT_LEFT,140);
+		//m_list.Insert
 	}
     m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-    
-	for(i=treepoint-1;i>0;i--)
+	NodeNum = 0;
+	for (i = 0; i<zhibiaoitempoint; i++)
 	{
 	//	MessageBox((_bstr_t)treeitem1[i]);
-		//m_list.SetItemText(i,0, (_bstr_t)treeitem1[i]);
-		m_list.InsertItem(0, (_bstr_t)treeitem[i]);
+		int lever1,lever2,lever3;
+		int downlever;
+		 
+		lever1 = Ftree[i].Find((_bstr_t)"1");
+		lever2 = Ftree[i].Find((_bstr_t)"2");
+		lever3 = Ftree[i].Find((_bstr_t)"3");
+		if (lever1 == 0)
+		{
+			char a = Ftree[i].GetAt(Ftree[i].GetLength() - 1);
+			if (int(a) - 48 == 0)
+			{
+				CString s =Ftree[i].Mid(1, Ftree[i].GetLength() - 2);
+				m_list.InsertItem(NodeNum, (_bstr_t)Ftree[i].Mid(1, Ftree[i].GetLength() - 3));
+				NodeNum++;
+			}
+		}
+		else if (lever2 == 0)
+		{
+			char a = Ftree[i].GetAt(Ftree[i].GetLength() - 1);
+			if (int(a) - 48 == 0)
+			{
+				m_list.InsertItem(NodeNum, (_bstr_t)Ftree[i].Mid(1, Ftree[i].GetLength() - 3));
+				NodeNum++;
+			}
+		}
+		else if (lever3 == 0)
+		{
+			m_list.InsertItem(NodeNum, (_bstr_t)Ftree[i].Mid(1, Ftree[i].GetLength() - 1));
+			NodeNum++;
+		}
+		//downlever = Ftree[i].Find((_bstr_t)"/");
+		
+		//m_list.InsertItem(0, (_bstr_t)treeitem[i]);
 	}
 	int j;
 	
-for(i=0;i<treepoint;i++)
-	for(j=1;j<treepoint1;j++)
+for (i = 0; i<NodeNum; i++)
+	for (j = 1; j<treepoint1; j++)
 		m_list.SetItemText(i,j,(_bstr_t)"双击输入");
 		UpdateData(false);
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -130,26 +164,61 @@ if (pHeaderCtrl != NULL)
    }
 }
 
-	int i;
-	m_list.InsertColumn(0, (_bstr_t)"指标/等级", LVCFMT_LEFT, 140);
-	for(i=1;i<treepoint1;i++)
-	{
-		//MessageBox((_bstr_t)treeitem[i]);
-		m_list.InsertColumn(i, (_bstr_t)treeitem1[i], LVCFMT_LEFT,140);
-	}
-    m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-    
-	for(i=treepoint-1;i>0;i--)
-	{
+
+int i;
+m_list.InsertColumn(0, (_bstr_t)"指标/等级", LVCFMT_LEFT, 140);
+for (i = 1; i<treepoint1; i++)
+{
+	//MessageBox((_bstr_t)treeitem[i]);
+	m_list.InsertColumn(i, (_bstr_t)treeitem1[i], LVCFMT_LEFT, 140);
+	//m_list.Insert
+}
+m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+NodeNum = 0;
+for (i = 0; i<zhibiaoitempoint; i++)
+{
 	//	MessageBox((_bstr_t)treeitem1[i]);
-		//m_list.SetItemText(i,0, (_bstr_t)treeitem1[i]);
-		m_list.InsertItem(0, (_bstr_t)treeitem[i]);
+	int lever1, lever2, lever3;
+	int downlever;
+
+	lever1 = Ftree[i].Find((_bstr_t)"1");
+	lever2 = Ftree[i].Find((_bstr_t)"2");
+	lever3 = Ftree[i].Find((_bstr_t)"3");
+	if (lever1 == 0)
+	{
+		char a = Ftree[i].GetAt(Ftree[i].GetLength() - 1);
+		if (int(a) - 48 == 0)
+		{
+			CString s = Ftree[i].Mid(1, Ftree[i].GetLength() - 2);
+			m_list.InsertItem(NodeNum, (_bstr_t)Ftree[i].Mid(1, Ftree[i].GetLength() - 3));
+			NodeNum++;
+		}
 	}
-	int j;
-	
-for(i=0;i<treepoint;i++)
-	for(j=1;j<treepoint;j++)
-		m_list.SetItemText(i,j,(_bstr_t)"双击输入");
+	else if (lever2 == 0)
+	{
+		char a = Ftree[i].GetAt(Ftree[i].GetLength() - 1);
+		if (int(a) - 48 == 0)
+		{
+			m_list.InsertItem(NodeNum, (_bstr_t)Ftree[i].Mid(1, Ftree[i].GetLength() - 3));
+			NodeNum++;
+		}
+	}
+	else if (lever3 == 0)
+	{
+		m_list.InsertItem(NodeNum, (_bstr_t)Ftree[i].Mid(1, Ftree[i].GetLength() - 1));
+		NodeNum++;
+	}
+	//downlever = Ftree[i].Find((_bstr_t)"/");
+
+	//m_list.InsertItem(0, (_bstr_t)treeitem[i]);
+}
+int j;
+
+for (i = 0; i<NodeNum; i++)
+	for (j = 1; j<treepoint1; j++)
+		m_list.SetItemText(i, j, (_bstr_t)"双击输入");
+	// return TRUE unless you set the focus to a control
+
 
 }
 
@@ -489,28 +558,29 @@ void Step3dialog::OnBnClickedButton28()//save
 	float num[100],sumnum=0;num[0]=0; 
 	CString input,zhengshu,xiaoshu;
 	//MessageBox((_bstr_t)treepoint+(_bstr_t)"tree"+(_bstr_t)treepoint1,(_bstr_t)"警告", MB_OKCANCEL ); 
-	for(i=0;i<treepoint-1;i++)
+	for (i = 0; i <NodeNum ; i++)
 	{
-		sumnum=0;
-	for(j=1;j<treepoint1;j++)
-    {
-	  if( m_list.GetItemText(i,j)==""||m_list.GetItemText(i,j)=="双击输入")
-	  {
-		   MessageBox((_bstr_t)i+(_bstr_t)"权重不能为空"+(_bstr_t)j,(_bstr_t)"警告", MB_OKCANCEL ); 
-			return;
-	  }
-	  
-	input=m_list.GetItemText(i,j);//	MessageBox((_bstr_t)i+(_bstr_t)"input"+(_bstr_t)j,(_bstr_t)"警告", MB_OKCANCEL ); 
-	chu=atof(input);
-	num[j]=chu;
-	R[i][j]=num[j];//MessageBox((_bstr_t)input,(_bstr_t)"警告", MB_OKCANCEL );
-    sumnum+=num[j];
-	}
-	if(sumnum!=1)
-	{
-		MessageBox((_bstr_t)i+(_bstr_t)"行未归一化，请先归一化",(_bstr_t)"警告", MB_OK); 
-			return;
-	}
+		sumnum = 0;
+		for (j = 1; j < treepoint1; j++)
+		{	
+			CString s = m_list.GetItemText(i, j);
+			if (m_list.GetItemText(i, j) == "" || m_list.GetItemText(i, j) == "双击输入")
+			{
+				MessageBox((_bstr_t)i + (_bstr_t)"权重不能为空" + (_bstr_t)j, (_bstr_t)"警告", MB_OKCANCEL);
+				return;
+			}
+			input = m_list.GetItemText(i, j);//	MessageBox((_bstr_t)i+(_bstr_t)"input"+(_bstr_t)j,(_bstr_t)"警告", MB_OKCANCEL ); 
+			chu = atof(input);
+			num[j] = chu;
+			R[i][j] = num[j];//MessageBox((_bstr_t)input,(_bstr_t)"警告", MB_OKCANCEL );
+			/* sumnum+=num[j];
+			 }
+			 if(sumnum!=1)
+			 {
+			 MessageBox((_bstr_t)i+(_bstr_t)"行未归一化，请先归一化",(_bstr_t)"警告", MB_OK);
+			 return;
+			 }*/
+		}
 	}
 	 Rsave=1;
 	MessageBox((_bstr_t)"已保存",(_bstr_t)"提示", MB_OK ); 

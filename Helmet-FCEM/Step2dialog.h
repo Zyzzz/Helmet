@@ -44,4 +44,8 @@ public:
 	CBitmapButton m_save;
 	afx_msg void OnBnClickedButton28();
 //	float m_result;
+	CListCtrl Two_lists;
+	CListCtrl Three_lists;
+	afx_msg void OnDblclkList2(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnDblclkList3(NMHDR *pNMHDR, LRESULT *pResult);
 };

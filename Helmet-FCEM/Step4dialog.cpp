@@ -14,11 +14,16 @@
 extern CString  treeitem[100],treeitem1[100];
 extern int treepoint,treepoint1;
 extern float quanzhong[70];
+extern float Two_wight[70];
+extern float Three_wight[70];
+extern int Two_wightNum ;
+extern int Three_wightNum ;
 extern int quanzhongnum;
 extern float R[100][100];
 extern int Rsave;
 extern int Qsave;
 extern int av,ov,aj,oj;
+extern int zhibiaoitempoint;
 // Step4dialog 对话框
 
 IMPLEMENT_DYNAMIC(Step4dialog, CDialogEx)
@@ -182,44 +187,123 @@ if (pHeaderCtrl != NULL)
 
 void Step4dialog::AV(void)//
 {
-	
-	int i,j,k;
+	int row = 0;
+	float leve3; 
 	float smallnum[100],bignum[100];
-     //权重A是和treepoint一样 是行
-	//R 要用列 【j】
-	for(j=1;j<treepoint1;j++)//lie
-    {
-		
-	for(i=0;i<treepoint-1;i++)//hang
+	int wightpos = 0;
+	float **lever3arry;	
+	int lever3resultpos = 0;
+	float **lever3result = new float*[30];
+	for (int j = 0; j < 30; j++)
 	{
-		
+		lever3result[j] = new float[treepoint1 + 1];
+	}
+	for (int i = 0; i < zhibiaoitempoint; i++)
+	{
+		int lever1, lever2, lever3;
 	
-	  if( quanzhong[i]<R[i][j])
-	  {
-		  smallnum[i]=quanzhong[i];
-	  
-	  }
-	  else
-	  {
-		   smallnum[i]=R[i][j];
-	  }
-		//MessageBox((_bstr_t)quanzhong[i]+"权重",(_bstr_t)"警告", MB_OKCANCEL ); 
-	  
-	  // MessageBox((_bstr_t)R[i][j],(_bstr_t)"警告", MB_OKCANCEL );
+		lever1 = Ftree[i].Find((_bstr_t)"1");
+		lever2 = Ftree[i].Find((_bstr_t)"2");
+		lever3 = Ftree[i].Find((_bstr_t)"3");
+		if (lever1 == 0)
+		{
+			char a = Ftree[i].GetAt(Ftree[i].GetLength() - 1);
+			if (int(a) - 48 == 0)
+			{
+				row++;
+			}
+		}
+		else if (lever2 == 0)
+		{
+			char a = Ftree[i].GetAt(Ftree[i].GetLength() - 1);
+			if (int(a) - 48 == 0)
+			{
+				row++;
+			}
+		}
+		else if (lever3 == 0)
+		{
+			int rowsum;
+			char a = Ftree[i-1].GetAt(Ftree[i-1].GetLength() - 1);
+			rowsum = a - 48;
+			float **lever3arry;
+			lever3arry = new float*[rowsum];
+			for (int j = 0; j < rowsum; j++)
+			{
+				lever3arry[j] = new float[treepoint1+1];
+			}
+			for (int j = 0; j < rowsum; j++)
+			{
+				for (int k = 1; k < treepoint1; k++)
+				{
+					lever3arry[j][k] = R[pj+row][k];
+				}
+			}
+			for (int j = 0; j < rowsum ; j++)
+			{
+				wightpos++;
+				for (int k = 1; k < treepoint1; k++)
+				{
+					lever3arry[j][k] = min(Three_wight[wightpos], lever3arry[j][k]);
+				}
+			}               
+
+			for (int j = 1; j < treepoint1; j++)
+			{
+				//wightpos++;
+				float max = -10000000;
+				for (int k = 0; k <rowsum ; k++)
+				{
+					if (max<lever3arry[k][j])
+						max = lever3arry[k][j];
+				}
+				lever3result[lever3resultpos][j] = max;
+			}
+			lever3resultpos++;
+			i =i+ rowsum-1;
+			row = row + rowsum;
+			for (int i = 0; i<rowsum; i++)
+			{
+				delete[] lever3arry[i]; //先撤销指针元素所指向的数组
+			}
+			delete[] lever3arry;
+		}
 	}
-	bignum[j]=smallnum[0];
-	for(i=1;i<treepoint-1;i++)//hang
-	{
-		if( bignum[j]<smallnum[i])
-	  {
-		 bignum[j]=smallnum[i];
-	  }
-	}
-	if(0<bignum[j]<1)
-	m_list.SetItemText(0,j,(_bstr_t)"0"+(_bstr_t)bignum[j]);
-	else
-		m_list.SetItemText(0,j,(_bstr_t)bignum[j]);
-	}
+ //    //权重A是和treepoint一样 是行
+	////R 要用列 【j】
+	//for(j=1;j<treepoint1;j++)//lie
+ //   {
+	//	
+	//for(i=0;i<treepoint-1;i++)//hang
+	//{
+	//	
+	//
+	//  if( quanzhong[i]<R[i][j])
+	//  {
+	//	  smallnum[i]=quanzhong[i];
+	//  
+	//  }
+	//  else
+	//  {
+	//	   smallnum[i]=R[i][j];
+	//  }
+	//	//MessageBox((_bstr_t)quanzhong[i]+"权重",(_bstr_t)"警告", MB_OKCANCEL ); 
+	//  
+	//  // MessageBox((_bstr_t)R[i][j],(_bstr_t)"警告", MB_OKCANCEL );
+	//}
+	//bignum[j]=smallnum[0];
+	//for(i=1;i<treepoint-1;i++)//hang
+	//{
+	//	if( bignum[j]<smallnum[i])
+	//  {
+	//	 bignum[j]=smallnum[i];
+	//  }
+	//}
+	//if(0<bignum[j]<1)
+	//m_list.SetItemText(0,j,(_bstr_t)"0"+(_bstr_t)bignum[j]);
+	//else
+	//	m_list.SetItemText(0,j,(_bstr_t)bignum[j]);
+	//}
 }
 
 

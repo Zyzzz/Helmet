@@ -5,4 +5,7 @@
 
 #include "stdafx.h"
 
+int Ftreenum = 1;
+CString Ftree[200];
+
 

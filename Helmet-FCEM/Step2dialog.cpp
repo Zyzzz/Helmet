@@ -13,12 +13,22 @@
 #include "CWorksheets.h"
 
 //***************************整评价指标树的内容
-extern int Ftreenum;
-extern CString Ftree[200];
+//extern int Ftreenum;
+//extern CString Ftree[200];
 
 //**************************
 float quanzhong[70]={0.0};//一级指标的权重
+float Two_wight[70] = { 0.0 };
+float Three_wight[70] = { 0.0 };
+int Two_wightNum=0;
+int Three_wightNum = 0;
+int falg = 1;
+int One_Node = 1;
 int Qsave=0;
+int Two_listnum = 1;
+int Three_listnum = 1;
+int Two_Pos[70];
+int Three_Pos[70];
 int quanzhongnum=0;
 CToolTipCtrl  m_ctrlTT1;
 CString shuru;int hang,lie,lieshu11=0;
@@ -26,6 +36,7 @@ extern CString  treeitem1[100];//评语树的内容
 extern int treepoint1;
 extern  CString  zhibiaoitem[100][2];//第一步指标树的所有节点 [0]编号(用于分三级，并知道谁与谁是一级)  [1]内容
 extern int zhibiaoitempoint;
+extern int zhibiaoitemchilds[100];
 // Step2dialog 对话框
 
 IMPLEMENT_DYNAMIC(Step2dialog, CDialogEx)
@@ -49,6 +60,8 @@ void Step2dialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON1, m_guiyihuabtn);
 	DDX_Control(pDX, IDC_BUTTON27, m_tip);
 	DDX_Control(pDX, IDC_BUTTON28, m_save);
+	DDX_Control(pDX, IDC_LIST2, Two_lists);
+	DDX_Control(pDX, IDC_LIST3, Three_lists);
 }
 
 
@@ -62,6 +75,8 @@ BEGIN_MESSAGE_MAP(Step2dialog, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &Step2dialog::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON27, &Step2dialog::OnBnClickedButton27)
 	ON_BN_CLICKED(IDC_BUTTON28, &Step2dialog::OnBnClickedButton28)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST2, &Step2dialog::OnDblclkList2)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST3, &Step2dialog::OnDblclkList3)
 END_MESSAGE_MAP()
 
 
@@ -117,24 +132,73 @@ BOOL Step2dialog::OnInitDialog()
 	//********************************初始化表
    //Ftree[]所存的项目都是如下格式： 1完成任务能力/3   2易学性/0  3情境意识
 	int i,k,yiji,xie;
+	int pos2=0;
+	int pos3 = 0;
 	int len=Ftree[0].GetLength();
 	int line= Ftree[0].Find((_bstr_t)"/");
 	int Vpoint=_ttoi(Ftree[0].Mid(line+1,len));//一级总的有几个	
 	m_list.InsertColumn(0, (_bstr_t)Ftree[0].Mid(1,line-1), LVCFMT_LEFT, 140);
-
-		for(k=0,i=1;k<Ftreenum;k++)
+	Two_lists.InsertColumn(0, (_bstr_t)"二级评测", LVCFMT_LEFT, 140);
+	Three_lists.InsertColumn(0, (_bstr_t)"三级级评测", LVCFMT_LEFT, 140);
+	for (k = 0, i = 1; k < Ftreenum; k++)
+	{
+		yiji = Ftree[k].Find((_bstr_t)"1");
+		xie = Ftree[k].Find((_bstr_t)"/");
+		if (yiji == 0)
 		{
-			yiji= Ftree[k].Find((_bstr_t)"1");
-			xie= Ftree[k].Find((_bstr_t)"/");
-			if(yiji==0)
-			{	m_list.InsertColumn(i, (_bstr_t)Ftree[k].Mid(1,xie-1), LVCFMT_LEFT,140);i++;}
+			One_Node++;
+			char s = Ftree[k].GetAt(Ftree[k].GetLength() - 1);
+			int a = s - 48;
+			m_list.InsertColumn(i, (_bstr_t)Ftree[k].Mid(1, xie - 1), LVCFMT_LEFT, 140);
+			i++;
+			Two_Pos[k] = a;
 		}
+		else
+		{
+			yiji = Ftree[k].Find((_bstr_t)"2");
+			if (yiji == 0)
+			{
+				char s = Ftree[k].GetAt(Ftree[k].GetLength() - 1);
+				int a = s - 48;
+				Two_lists.InsertColumn(Two_listnum, (_bstr_t)Ftree[k].Mid(1, xie - 1), LVCFMT_LEFT, 140);
+				Two_listnum++;
+				//Two_wightNum++;
+				Three_Pos[k] = a;
+			}
+			else
+			{
+				yiji = Ftree[k].Find((_bstr_t)"3");
+				if (yiji == 0)
+				{
+					Three_lists.InsertColumn(Three_listnum, (_bstr_t)Ftree[k].Mid(1,Ftree[k].GetLength()-1), LVCFMT_LEFT, 140);
+					Three_listnum++;
+					//Two_wightNum++;
+				}
+			}
+		}
+	}
     m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
     m_list.InsertItem(0, (_bstr_t)"");
 	m_list.SetItemText(0,0,(_bstr_t)"权重");
+	//Two_lists.
+	Two_lists.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	Two_lists.InsertItem(0, (_bstr_t)"");
+	Two_lists.SetItemText(0, 0, (_bstr_t)"权重");
+	Three_lists.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	Three_lists.InsertItem(0, (_bstr_t)"");
+	Three_lists.SetItemText(0, 0, (_bstr_t)"权重");
 	int j;
 	for(j=1;j<=Vpoint;j++)
 		m_list.SetItemText(0,j,(_bstr_t)"双击输入");
+
+	for (j = 1; j <= Two_listnum; j++)
+		Two_lists.SetItemText(0, j, (_bstr_t)"双击输入");
+
+
+	for (j = 1; j <= Three_listnum; j++)
+		Three_lists.SetItemText(0, j, (_bstr_t)"双击输入");
+
+
 	UpdateData(false);
 	return TRUE;  // return TRUE unless you set the focus to a control
 
@@ -174,9 +238,21 @@ void Step2dialog::OnEnKillfocusEdit1()
 			return;
 	   }
     }   
-
-    m_list.SetItemText(hang,lie,shuru);   //设置编辑框的新内容  
-    m_edit.ShowWindow(SW_HIDE);                //应藏编辑框  
+	 if (falg == 1)
+	 {
+		 m_list.SetItemText(hang, lie, shuru);   //设置编辑框的新内容  
+		 m_edit.ShowWindow(SW_HIDE);                //应藏编辑框  
+	 }
+	 else if (falg ==2 )
+	 {
+		 Two_lists.SetItemText(hang, lie, shuru);   //设置编辑框的新内容  
+		 m_edit.ShowWindow(SW_HIDE);                //应藏编辑框  
+	 }
+	 else
+	 {
+		 Three_lists.SetItemText(hang, lie, shuru);   //设置编辑框的新内容  
+		 m_edit.ShowWindow(SW_HIDE);
+	 }
 }
 
 
@@ -185,10 +261,11 @@ void Step2dialog::OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 		NM_LISTVIEW* pNMListView=(NM_LISTVIEW*)pNMHDR; 
 	 CRect rc;  
+	 falg = 1;
     hang = pNMListView->iItem;//获得选中的行  
     lie = pNMListView->iSubItem;//获得选中列  
 	if(m_list.GetItemText(hang,lie)=="双击输入")
-	m_list.SetItemText(hang,lie,(_bstr_t)"0");
+		m_list.SetItemText(hang,lie,(_bstr_t)"0");
     if   (pNMListView->iSubItem != 0) //如果选择的是子项;  
     {  
         m_list.GetSubItemRect(hang,lie,LVIR_LABEL,rc);//获得子项的RECT；  
@@ -219,25 +296,64 @@ if (pHeaderCtrl != NULL)
    }
 }
 
-		int i,k,yiji,xie;
-	int len=Ftree[0].GetLength();
-					int line= Ftree[0].Find((_bstr_t)"/");
-					int Vpoint=_ttoi(Ftree[0].Mid(line+1,len));//一级总的有几个	
-	m_list.InsertColumn(0, (_bstr_t)Ftree[0].Mid(1,line-1), LVCFMT_LEFT, 140);
-		for(k=0,i=1;k<Ftreenum;k++)
-		{
-			yiji= Ftree[k].Find((_bstr_t)"1");
-			xie= Ftree[k].Find((_bstr_t)"/");
-			if(yiji==0)
-			{m_list.InsertColumn(i, (_bstr_t)Ftree[k].Mid(1,xie-1), LVCFMT_LEFT,140);i++;}
-		}
+	int i, k, yiji, xie;
 	
-    m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-     m_list.InsertItem(0, (_bstr_t)"");
-	m_list.SetItemText(0,0,(_bstr_t)"权重");
-	int j;
-	for(j=1;j<=Vpoint;j++)
-		m_list.SetItemText(0,j,(_bstr_t)"双击输入");
+	int len = Ftree[0].GetLength();
+	int line = Ftree[0].Find((_bstr_t)"/");
+	int Vpoint = _ttoi(Ftree[0].Mid(line + 1, len));//一级总的有几个	
+	m_list.InsertColumn(0, (_bstr_t)Ftree[0].Mid(1, line - 1), LVCFMT_LEFT, 140);
+	Two_lists.InsertColumn(0, (_bstr_t)"二级评测", LVCFMT_LEFT, 140);
+	Three_lists.InsertColumn(0, (_bstr_t)"三级级评测", LVCFMT_LEFT, 140);
+	for (k = 0, i = 1; k < Ftreenum; k++)
+	{
+		yiji = Ftree[k].Find((_bstr_t)"1");
+		xie = Ftree[k].Find((_bstr_t)"/");
+		if (yiji == 0)
+		{
+			m_list.InsertColumn(i, (_bstr_t)Ftree[k].Mid(1, xie - 1), LVCFMT_LEFT, 140);
+			i++;
+		}
+		else
+		{
+			yiji = Ftree[k].Find((_bstr_t)"2");
+			if (yiji == 0)
+			{
+				Two_lists.InsertColumn(Two_listnum, (_bstr_t)Ftree[k].Mid(1, xie - 1), LVCFMT_LEFT, 140);
+				Two_listnum++;
+			}
+			else
+			{
+				yiji = Ftree[k].Find((_bstr_t)"3");
+				if (yiji == 0)
+				{
+					Three_lists.InsertColumn(Three_listnum, (_bstr_t)Ftree[k].Mid(1, Ftree[k].GetLength() - 1), LVCFMT_LEFT, 140);
+					Three_listnum++;
+				}
+			}
+	}
+}
+m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+m_list.InsertItem(0, (_bstr_t)"");
+m_list.SetItemText(0, 0, (_bstr_t)"权重");
+//Two_lists.
+Two_lists.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+Two_lists.InsertItem(0, (_bstr_t)"");
+Two_lists.SetItemText(0, 0, (_bstr_t)"权重");
+Three_lists.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+Three_lists.InsertItem(0, (_bstr_t)"");
+Three_lists.SetItemText(0, 0, (_bstr_t)"权重");
+int j;
+for (j = 1; j <= Vpoint; j++)
+m_list.SetItemText(0, j, (_bstr_t)"双击输入");
+
+for (j = 1; j <= Two_listnum; j++)
+Two_lists.SetItemText(0, j, (_bstr_t)"双击输入");
+
+
+for (j = 1; j <= Three_listnum; j++)
+Three_lists.SetItemText(0, j, (_bstr_t)"双击输入");
+
+
 }
 
 
@@ -547,6 +663,8 @@ CString Step2dialog::Lin_GetEnglishCharacter(int Num)
 void Step2dialog::excel(void)
 {
 	Lin_ExportListToExcel(m_list);
+	Lin_ExportListToExcel(Two_lists);
+	Lin_ExportListToExcel(Three_lists);
 }
 
 
@@ -557,28 +675,119 @@ void Step2dialog::OnBnClickedButton28()//保存权重
 	float num[100],sumnum=0;num[0]=0; 
 	CString input,zhengshu,xiaoshu;
 	
-	for(i=1;i<zhibiaoitempoint;i++)
+	for (i = 1; i<One_Node; i++)
     {
 	  if( m_list.GetItemText(0,i)==""||m_list.GetItemText(0,i)=="双击输入")
 	 {
 		   MessageBox((_bstr_t)"权重不能为空",(_bstr_t)"警告", MB_OKCANCEL ); 
 			return;
 	 }
-	input=m_list.GetItemText(0,i);	
-	chu=atof(input);//MessageBox((_bstr_t)chu,(_bstr_t)"警告", MB_OKCANCEL );
-	num[i]=chu;
-    sumnum+=num[i];
+		input=m_list.GetItemText(0,i);	
+		chu=atof(input);//MessageBox((_bstr_t)chu,(_bstr_t)"警告", MB_OKCANCEL );
+		num[i]=chu;
+		sumnum+=num[i];
 	}
-	if(sumnum!=1)
+	if(int(sumnum)!=1)
 	{
-		MessageBox((_bstr_t)"权重未归一化，请先归一化",(_bstr_t)"警告", MB_OK); 
+		MessageBox((_bstr_t)"一级权重未归一化，请先归一化",(_bstr_t)"警告", MB_OK); 
 			return;
+	}
+	if (int(sumnum + 0.9) != 1)
+	{
+		MessageBox((_bstr_t)"一级权重未归一化，请先归一化", (_bstr_t)"警告", MB_OK);
+		return;
 	}
 	for(i=1;i<zhibiaoitempoint;i++)
     {
 		quanzhong[quanzhongnum]=num[i];
 		quanzhongnum++;
 	}
+	
+
+	int pos = 1;
+	int Sum = 0;
+	int pos2 = 1;
+	for (i = 1; i<zhibiaoitempoint; i++)
+	{
+		sumnum = 0;
+		if (Two_Pos[i] != 0)
+		{
+
+			Sum = Sum + Two_Pos[i];
+			for (; pos <= Sum; pos++)
+			{
+				if (Two_lists.GetItemText(0, pos) == "" || Two_lists.GetItemText(0, pos) == "双击输入")
+				{
+					MessageBox((_bstr_t)"二级权重不能为空", (_bstr_t)"警告", MB_OKCANCEL);
+					return;
+				}
+				input = Two_lists.GetItemText(0, pos);
+				chu = atof(input);//MessageBox((_bstr_t)chu,(_bstr_t)"警告", MB_OKCANCEL );
+				num[pos] = chu;
+				sumnum += num[pos];
+			}
+			if (int(sumnum) != 1)
+			{
+				MessageBox((_bstr_t)"二级权重未归一化，请先归一化", (_bstr_t)"警告", MB_OK);
+				return;
+			}
+			if (int(sumnum+0.9) != 1)
+			{
+				MessageBox((_bstr_t)"二级权重未归一化，请先归一化", (_bstr_t)"警告", MB_OK);
+				return;
+			}
+			for (; pos2 <= Sum; pos2++)
+			{
+				Two_wight[pos2] = num[pos2];
+				Two_wightNum++;
+			}
+		}	
+	}
+		
+
+	pos = 1;
+	Sum = 0;
+	pos2 = 1;
+	for (i = 1; i<zhibiaoitempoint; i++)
+	{
+		sumnum = 0;
+		if (Three_Pos[i] != 0)
+		{
+			Sum = Sum + Three_Pos[i];
+			for (; pos <= Sum; pos++)
+			{
+				if (Three_lists.GetItemText(0, pos) == "" || Three_lists.GetItemText(0, pos) == "双击输入")
+				{
+					MessageBox((_bstr_t)"三级权重不能为空", (_bstr_t)"警告", MB_OKCANCEL);
+					return;
+				}
+				input = Three_lists.GetItemText(0, pos);
+				chu = atof(input);//MessageBox((_bstr_t)chu,(_bstr_t)"警告", MB_OKCANCEL );
+				num[pos] = chu;
+				sumnum += num[pos];
+			}
+			if (int(sumnum) != 1)
+			{
+				MessageBox((_bstr_t)"三级权重未归一化，请先归一化", (_bstr_t)"警告", MB_OK);
+				return;
+			}
+			if (int(sumnum + 0.9) != 1)
+			{
+				MessageBox((_bstr_t)"三级权重未归一化，请先归一化", (_bstr_t)"警告", MB_OK);
+				return;
+			}
+			for (; pos2 <= Sum; pos2++)
+			{
+				Three_wight[pos2] = num[pos2];
+				Three_wightNum++;
+			}
+		}
+	}
+
+
+
+
+
 	Qsave=1;
 	MessageBox((_bstr_t)"已保存",(_bstr_t)"提示", MB_OK ); 
 	/*for(i=0;i<quanzhongnum;i++)
@@ -586,4 +795,56 @@ void Step2dialog::OnBnClickedButton28()//保存权重
 		
 		MessageBox((_bstr_t)quanzhong[i]+"权重",(_bstr_t)"警告", MB_OKCANCEL ); 
 	}*/
+}
+
+
+void Step2dialog::OnDblclkList2(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	CRect rc;
+	falg = 2;
+	hang = pNMListView->iItem;//获得选中的行  
+	lie = pNMListView->iSubItem;//获得选中列  
+	if (Two_lists.GetItemText(hang, lie) == "双击输入")
+		Two_lists.SetItemText(hang, lie, (_bstr_t)"0");
+	if (pNMListView->iSubItem != 0) //如果选择的是子项;  
+	{
+		Two_lists.GetSubItemRect(hang, lie, LVIR_LABEL, rc);//获得子项的RECT；  
+		m_edit.SetParent(&Two_lists);//转换坐标为列表框中的坐标  
+		m_edit.MoveWindow(rc);//移动Edit到RECT坐在的位置;  
+		m_edit.SetWindowText(Two_lists.GetItemText(hang, lie));//将该子项中的值放在Edit控件中；  
+		m_edit.ShowWindow(SW_SHOW);//显示Edit控件；  
+		m_edit.SetFocus();//设置Edit焦点  
+		m_edit.ShowCaret();//显示光标  
+		m_edit.SetSel(-1);//将光标移动到最后  
+
+	}
+	*pResult = 0;
+}
+
+
+void Step2dialog::OnDblclkList3(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	CRect rc;
+	falg = 3;
+	hang = pNMListView->iItem;//获得选中的行  
+	lie = pNMListView->iSubItem;//获得选中列  
+	if (Three_lists.GetItemText(hang, lie) == "双击输入")
+		Three_lists.SetItemText(hang, lie, (_bstr_t)"0");
+	if (pNMListView->iSubItem != 0) //如果选择的是子项;  
+	{
+		Three_lists.GetSubItemRect(hang, lie, LVIR_LABEL, rc);//获得子项的RECT；  
+		m_edit.SetParent(&Three_lists);//转换坐标为列表框中的坐标  
+		m_edit.MoveWindow(rc);//移动Edit到RECT坐在的位置;  
+		m_edit.SetWindowText(Three_lists.GetItemText(hang, lie));//将该子项中的值放在Edit控件中；  
+		m_edit.ShowWindow(SW_SHOW);//显示Edit控件；  
+		m_edit.SetFocus();//设置Edit焦点  
+		m_edit.ShowCaret();//显示光标  
+		m_edit.SetSel(-1);//将光标移动到最后  
+
+	}
+	*pResult = 0;
 }
